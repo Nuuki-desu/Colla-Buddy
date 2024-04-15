@@ -1,91 +1,45 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-
-using namespace std;
-
-void displayMenu() {
-    cout << "1. Create a new file" << endl;
-    cout << "2. Open an existing file" << endl;
-    cout << "3. Save file" << endl;
-    cout << "4. Exit" << endl;
-    cout << "Choose an option: ";
-}
-
-void createNewFile() {
-    string fileName, content;
-    cout << "Enter the name of the file to create: ";
-    cin >> fileName;
-    ofstream file(fileName);
-    if (file.is_open()) {
-        cout << "Enter content (press Ctrl+Z followed by Enter to finish):\n";
-        cin.ignore(); // Ignore newline character from previous input
-        while (getline(cin, content)) {
-            file << content << endl;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple HTML Text Editor</title>
+    <style>
+        .editor {
+            width: 80%;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            padding: 10px;
         }
-        file.close();
-        cout << "File created successfully.\n";
-    } else {
-        cout << "Unable to create file.\n";
-    }
-}
 
-void openFile() {
-    string fileName, line;
-    cout << "Enter the name of the file to open: ";
-    cin >> fileName;
-    ifstream file(fileName);
-    if (file.is_open()) {
-        cout << "File content:\n";
-        while (getline(file, line)) {
-            cout << line << endl;
+        .toolbar {
+            margin-bottom: 10px;
         }
-        file.close();
-    } else {
-        cout << "Unable to open file.\n";
-    }
-}
 
-void saveFile() {
-    string fileName, content;
-    cout << "Enter the name of the file to save: ";
-    cin >> fileName;
-    ofstream file(fileName);
-    if (file.is_open()) {
-        cout << "Enter content (press Ctrl+Z followed by Enter to finish):\n";
-        cin.ignore(); // Ignore newline character from previous input
-        while (getline(cin, content)) {
-            file << content << endl;
+        .toolbar button {
+            margin-right: 5px;
         }
-        file.close();
-        cout << "File saved successfully.\n";
-    } else {
-        cout << "Unable to save file.\n";
-    }
-}
+    </style>
+</head>
+<body>
+    <div class="editor" contenteditable="true">
+        <div class="toolbar">
+            <button onclick="execCmd('bold')">Bold</button>
+            <button onclick="execCmd('italic')">Italic</button>
+            <button onclick="execCmd('underline')">Underline</button>
+            <button onclick="execCmd('insertUnorderedList')">Bullet List</button>
+            <button onclick="execCmd('insertOrderedList')">Numbered List</button>
+            <button onclick="execCmd('justifyLeft')">Align Left</button>
+            <button onclick="execCmd('justifyCenter')">Align Center</button>
+            <button onclick="execCmd('justifyRight')">Align Right</button>
+        </div>
+        <p>Start typing here...</p>
+    </div>
 
-int main() {
-    int choice;
-    do {
-        displayMenu();
-        cin >> choice;
-        switch (choice) {
-            case 1:
-                createNewFile();
-                break;
-            case 2:
-                openFile();
-                break;
-            case 3:
-                saveFile();
-                break;
-            case 4:
-                cout << "Exiting...\n";
-                break;
-            default:
-                cout << "Invalid choice. Please choose again.\n";
+    <script>
+        function execCmd(command) {
+            document.execCommand(command, false, null);
         }
-    } while (choice != 4);
-
-    return 0;
-}
+    </script>
+</body>
+</html>
