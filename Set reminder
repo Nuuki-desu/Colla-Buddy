@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reminder for Deadlines</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="datetime-local"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Set Reminder for Deadline</h2>
+        <form id="reminderForm">
+            <label for="dateTime">Select Date and Time:</label>
+            <input type="datetime-local" id="dateTime" name="dateTime">
+            <label for="deadline">Set Deadline (in minutes before):</label>
+            <input type="number" id="deadline" name="deadline" min="0">
+            <button type="button" onclick="setReminder()">Set Reminder</button>
+        </form>
+    </div>
+
+    <script>
+        function setReminder() {
+            var selectedDateTime = new Date(document.getElementById("dateTime").value);
+            var deadlineMinutes = parseInt(document.getElementById("deadline").value);
+            var reminderTime = new Date(selectedDateTime.getTime() - (deadlineMinutes * 60000)); // Convert minutes to milliseconds
+
+            // Schedule reminder alert
+            setTimeout(function() {
+                alert("Reminder: Your deadline is approaching!");
+            }, reminderTime - Date.now());
+        }
+    </script>
+</body>
+</html>
